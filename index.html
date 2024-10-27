@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Russian Roulette Simulator</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+    h1 {
+      color: #333;
+    }
+    img {
+      max-width: 300px;
+      margin-bottom: 20px;
+    }
+    p {
+      margin: 1em 0;
+      padding: 0 1em;
+      text-align: center;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 15px;
+      cursor: pointer;
+      margin: 5px;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .info {
+      margin: 10px 0;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>Russian Roulette Simulator</h1>
+  
+  <audio id="gunshot" src="https://www.soundjay.com/mechanical/sounds/gun-gunshot-01.mp3" preload="auto"></audio>
+
+  <img src="https://i.imgur.com/d7ljJIs.png" alt="Gun Image">
+  <p id="gunText">The gun has 6 chambers and is loaded with 1 bullet.</p>
+  <p id="chanceText">The gun has a <u>${((shots + 1) / 6 * 100).toFixed(2)}%</u> chance of firing.</p>
+  <p class="info" id="shotsText">Total Shots: 0</p>
+  
+  <button onclick="if (bulletPos <= 0) { gunText = '<b>The gun fired!</b>'; document.getElementById('gunshot').play(); barrelSpinText = 'Try Again'; } else { gunText = 'The gun did not fire.'; bulletPos--; shots++; } update();">Pull Trigger</button>
+  <button id="spinButton" onclick="bulletPos = Math.floor(Math.random()*6); shots = 0; barrelSpinText = 'Spin Barrel'; gunText = 'The barrel has been spun.'; update();">Spin Barrel</button>
+  
+  <script>
+    let bulletPos = 0;
+    let shots = 0;
+    let gunText = "The gun has 6 chambers and is loaded with 1 bullet.";
+    let barrelSpinText = "Spin Barrel";
+
+    function update() {
+      document.getElementById("gunText").innerHTML = gunText;
+      document.getElementById("chanceText").innerHTML = `The gun has a <u>${((shots + 1) / 6 * 100).toFixed(2)}%</u> chance of firing.`;
+      document.getElementById("shotsText").innerHTML = `Total Shots: ${shots}`;
+      document.getElementById("spinButton").innerHTML = barrelSpinText;
+    }
+  </script>
+</body>
+</html>
